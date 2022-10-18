@@ -135,21 +135,14 @@ kable(Species_summary, caption = "Summary Statistics of Penguin Species") %>%
 ```
 
 ```{r estimators_CIs, echo=FALSE}
-Bill_Length_summary <- tribble(~Species, ~"Mean (mm)", ~"95% CI (mm)", ~"SD", 
-                                "Adelie", 38.70, "37.98-39.42", 2.58,
-                                "Gentoo", 46.88, "45.83-47.93", 3.09,
-                                "Chinstrap", 48.99, "48.08-49.90", 2.68)
+Bill_Length_summary <- tribble(~Species, ~"Mean (mm)", ~"95% CI (mm)", ~"SD",  ~"Mean (mm)", ~"95% CI (mm)", ~"SD", 
+                                "Adelie", 38.70, "37.98-39.42", 2.58, 18.15, "17.81-18.49", 1.21, 
+                                "Gentoo", 46.88, "45.83-47.93", 3.09, 14.88, "14.57-15.19", 0.91, 
+                                "Chinstrap", 48.99, "48.08-49.90", 2.68, 18.44, "18.03-18.85", 1.19)
 
-kable(Bill_Length_summary, caption = "Bill Length Summary Statistics") %>%
-  kable_classic_2(full_width = F, latex_options = "HOLD_position")
-
-Bill_Depth_summary <- tribble(~Species, ~"Mean (mm)", ~"95% CI (mm)", ~"SD", 
-                               "Adelie", 18.15, "17.81-18.49", 1.21, 
-                               "Gentoo", 14.88, "14.57-15.19", 0.91, 
-                               "Chinstrap", 18.44, "18.03-18.85", 1.19)
-
-kable(Bill_Depth_summary, caption = "Bill Depth Summary Statistics") %>%
-  kable_classic_2(full_width = F, latex_options = "HOLD_position")
+kable(Bill_Length_summary, caption = "Summary Statistics",  align = "c") %>%
+  add_header_above(c(" " = 1, "Bill Length" = 3, "Bill Depth" = 3)) %>%
+  kable_styling(full_width = F, latex_options = "HOLD_position")
 
 ```
 
