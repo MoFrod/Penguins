@@ -161,3 +161,16 @@ Q12 <- my.penguins %>%
 # Visualise bill depth QQ plots
 ggarrange(Q10, Q11, Q12, ncol=3, nrow=1, common.legend = TRUE, legend="bottom")
 
+
+# Boxplot of body mass for Adelie sex
+my.penguins %>%
+  filter(species == "Adelie") %>%
+  ggplot(aes(x = sex, y = body_mass_g)) + geom_boxplot(alpha = 0.5, color = "#33a02c") + labs(y = "Body Mass (g)") + theme(axis.title.x=element_blank()) + expand_limits(y = 2000)
+
+my.penguins %>%
+  filter(species == "Gentoo") %>%
+  ggplot(aes(x = sex, y = body_mass_g)) + geom_boxplot(alpha = 0.5, color = "#33a02c") + labs(y = "Body Mass (g)") + theme(axis.title.x=element_blank()) + expand_limits(y = 2000)
+
+my.penguins %>%
+  filter(species == "Chinstrap") %>%
+  ggplot(aes(x = sex, y = body_mass_g)) + geom_boxplot(alpha = 0.5, color = "#33a02c") + labs(y = "Body Mass (g)") + theme(axis.title.x=element_blank()) + expand_limits(y = 2000)

@@ -26,11 +26,11 @@ To the West of the Antarctic Peninsula, extending North and South of the Palmer 
 
 The LTER researchers are using penguin-borne sensors to inform long-term studies on penguin population dynamics and improve our understanding of how Antarctic penguins are adjusting to rapid climate changes (@PS). The most dramatic effects of climate change are being observed in our polar regions (@PS). 
 
-This report is informed by a dataset called `penguins` from the `pamlerpenguins` R package; it is one of two packages provided by Palmer LTER researchers (@RStudio). The dataset is pre-processed, so accuracy and quality are assumed. The dataset provides 333 observations across 8 variables; it is assumed that this is a sample of the data collected by Palmer Station. The `set.seed()` and `sample` functions in R were to generate a random, representative sample to inform this report.
+This report is informed by a dataset called `penguins` from the `pamlerpenguins` R package; it is one of two packages provided by Palmer LTER researchers (@RStudio). The dataset is pre-processed, so accuracy and quality are assumed. It is assumed that this is a sample of the data collected by Palmer Station as the dataset provides 333 observations of penguins between 2007 and 2009. The `set.seed()` and `sample` functions in `R` were to generate a random, representative sample to inform this report.
 
 ### Objectives
 
-The exploratory data analysis outlined in this report explores a sample of 100 penguins from the `penguins` dataset. There are four objectives for this analysis:
+The exploratory data analysis outlined in this report explores a sample of 100 penguins from the `penguins` dataset. There are 4 objectives for this analysis:
 
 1. identify an appropriate probability distribution to represent at least one measurement variable (bill length, bill depth, flipper length and body mass);
 
@@ -59,7 +59,7 @@ H2 <- my.penguins %>%
 # Group Histograms
 grid.arrange(H1, H2, ncol=2, nrow=1)
 ```
-These histograms visualise the distribution of penguins' bill length (BL), bill depth (BD), flipper length (FL), and body mass (BM) data. The measurement data appears to be multimodal with some variance. 
+These histograms visualise the distribution of penguins' bill length (BL), bill depth (BD), flipper length (FL), and body mass (BM) data. The measurement data appears to be multimodal with some variance. However, there may be elements, such as the penguins' species, which are influencing the distribution of this data. 
 
 ```{r summary, include=FALSE}
 my.summary <- tribble(~"Variable", ~"Bill Length (mm)", ~"Bill Depth (mm)", ~"Flipper Length (mm)", ~"Body Mass (g)", "Mean", 43.25, 17.13, 199.39, 4148.25, "SD", 5.31, 1.93, 13.69, 796.44, "CoV", 12.28, 11.27, 6.87, 19.20)
@@ -67,8 +67,6 @@ my.summary <- tribble(~"Variable", ~"Bill Length (mm)", ~"Bill Depth (mm)", ~"Fl
 kable(my.summary, caption = "Summary Statistics of Penguin Variables") %>%
   kable_classic_2(full_width = F, latex_options = "HOLD_position")
 ```
-
-These histograms suggest that there may be elements, such as the penguins' species, which are influencing the distribution of the data. 
 
 Filtering the data demonstrates that the BL, BD, FL, and BM changes by penguin species. The boxplots for BL and DP are provided below (all boxplots are provided in `Appendix B`).
 
@@ -84,7 +82,9 @@ B2 <- my.penguins %>%
 grid.arrange(B1, B2, ncol=2, nrow=1)
 ```
 
-It is likely to be more significant, therefore, to observe the distribution, and estimate the parameters of the population, separately for each penguin species. For each species, the distribution of BL and BD are visualised below (all density distributions are provided in `Appendix C`).
+In these plots, we observe that Adelie penguins have shorter bills and Gentoo penguins have thinner bills. It is likely to be more significant, therefore, to observe the distribution, and estimate the parameters of the population, separately for each penguin species. 
+
+For each species, the distribution of BL and BD are visualised below (all density distributions are provided in `Appendix C`).
 
 ```{r pdistributions_1_2, echo=FALSE, fig.height=3}
 # Density Distribution of bill length for penguins by species
@@ -98,9 +98,9 @@ D2 <- my.penguins %>%
 ggarrange(D1, D2, ncol=2, nrow=1, common.legend = TRUE, legend="top")
 ```
 
-Measurement data (e.g. weight or height) of a population frequently follows a normal distribution. Initially, however, the density distributions of BL, BD, FL, and BM of the penguin species do not appear to follow a normal distribution. On closer inspection, some variables do appear to approximate a normal distribution, especially the BL, FL and BM of Adelie penguins. 
+Measurement data (e.g. weight or height) of a population frequently follows a normal probability distribution. Initially, however, the density distributions of BL, BD, FL, and BM of the penguin species do not appear to. On closer inspection, some variables do appear to approximate a normal distribution, especially the BL, FL and BM of Adelie penguins. 
 
-It is important to remember that our data sample is small. In the sample of 100 penguins, there are 49 Adelie, 33 Gentoo, and 18 Chinstrap. It is likely that there is too little measurement data for Chinstrap penguins to accurately confirm its data distribution. 
+It is important to remember that our data sample is small. In the sample of 100 penguins, there are 49 Adelie, 33 Gentoo, and 18 Chinstrap. It is likely that there is too little measurement data for Chinstrap penguins to reliably identify its appropriate probability distribution. 
 
 The Q-Q plots below, therefore, test whether or not the BL and BD data of Adelie and Gentoo penguins are normally distributed (all Q-Q plots are provided in `Appendix D`).
 
@@ -120,14 +120,12 @@ QQ_BL_BD <- ggarrange(QQ_BL, QQ_BD, ncol=2, nrow=1, common.legend = TRUE, legend
 annotate_figure(QQ_BL_BD, left = text_grob("Sample Quantiles", rot = 90, vjust = 1), bottom = text_grob("Theoretical Quantiles"))
 ```
 
-These Q-Q plots demonstrate that the BL, BD, FL and BM of Adelie and Gentoo penguins does approximate a normal distribution. It is important to note that the density distributions suggest there is another element influencing the data distribution. `Appendix E` presents Q-Q plots that clearly demonstrate the data distributions for male and female penguins are different for all species, and this will be explored further in `Objective 2`.
+These Q-Q plots demonstrate that the BL, BD, FL and BM of Adelie and Gentoo penguins does approximate a normal probability distribution. It is important to note that the previous density distributions plots suggest there is another element influencing the distribution of our data. `Appendix E` presents Q-Q plots that clearly demonstrate the data distributions for male and female penguins are different for all species, and this will be explored further in `Objective 2`.
 
 \vspace{12pt}
 **Objective 2 (Distribution Parameters)**
 
-A normal distribution is characterised by two paramenters; these are the 'mean' and 'standard deviation'.
-
-The 'mean', its 95% 'confidence interval' (95% CI), and 'standard deviation' (SD) of BL and BD from the sample data for each penguin species are presented in the tables below (all parameters are provided in `Appendix F`). 
+A normal distribution is characterised by two paramenters; these are the 'mean' and 'standard deviation' (@scribbr). The 'mean', its 95% 'confidence interval' (95% CI), and 'standard deviation' (SD) of BL and BD from the sample data for each penguin species are presented in the tables below (all parameters are provided in `Appendix F`). 
 
 ```{r estimators, include=FALSE}
 Species_summary <- tribble(~Variable, ~"A:Mean", ~"A:SD", ~"G:Mean", ~"G:SD", ~"C:Mean", ~"C:SD", "Bill Length (mm)", 38.70, 2.58, 46.88, 3.08, 48.99,2.68, "Bill Depth (mm)", 18.15, 1.21, 14.88, 0.91, 18.44, 1.19, "Flippper Length (mm)", 189.78, 6.80, 189.78, 6.80, 216.42, 5.68, "Body Mass (g)", 3691.84, 452.38, 3691.84, 452.38, 5075.76, 481.76)
@@ -157,46 +155,42 @@ kable(Bill_Depth_summary, caption = "Bill Depth Summary Statistics") %>%
 
 The 'mean' and 'standard deviation' as parameters of our BL, BD, FL and BM distributions will be limited as estimators for the population parameters. There is only one sample to inform the estimators and, when filtered by species, the sample set is small. The 95% 'confidence interval', therefore, provides us with the interval that indicates how close the estimated 'mean' is likely to be to the true value; we can be 95% confident that the population mean will be between this interval. 
 
-In accordance with the central limit theorem, however, as we increase the sample size the sample 'mean' will approach the population 'mean'. Similarly, if there were more sample sets, the 'mean' and 'standard deviation' of the samples' parameters would better estimate the population parameters.
-
-```{r notes, include=FALSE}
-#[MLE?!] [It is important to note that Normal distributions also have two other key characteristics: the mean, median and mode are exactly the same; and, the distribution is symmetric about the mean - half the values fall below the mean and half above the mean. TO EXPLORE IF THERE IS SPACE]
-```
+However, as our data approximates a normal distribution, the central limit theorem applies and as we increase the sample size the sample 'mean' will approach the population 'mean'. Similarly, if there were more sample sets, the 'mean' and 'standard deviation' of the samples' parameters would better estimate the population parameters.
 
 \vspace{12pt}
 **Objective 3 (Estimate Penguin Sex)**
 
-LTER researchers at Palmer station would like to estimate the sec of a penguin from measurement data to avoid the need for invasive procedures that cause penguin distress. 
+LTER researchers at Palmer station would like to estimate the sec of a penguin from measurement data to avoid the need for invasive procedures that cause penguin distress.  
 
-The Q-Q plots in `Appendix E` appear to suggest that the data distribution of male and female penguins differ, regardless of their species. The difference between the BL and BM is most visually obvious. Two-sample t-tests were used to test whether this difference is statistically significant. 
+The Q-Q plots in `Appendix E` suggest that the data distribution of male and female penguins differ, regardless of their species. The difference between the BL and BM appears most visually obvious (boxplots are also provided in `Appendix G`. Two-sample t-tests are used to test whether this difference is significant enough to reliably estimate the sex of a penguin. 
 
-These tests tell us that in our sample of Adelie and Gentoo penguins, the difference between males and females BM 'mean' is more statistically significant than BL 'mean'. In our sample of Chinstrap penguins, the difference between males and females BL 'mean' is more statistically significant than BM 'mean'. 
+For example, the BM two-sample t-test for Adelie penguins is set out below.
 
-The BM two-sample t-test for Adelie penguins is set out below (all two-sample t-tests are provided in `Appendix G`.) 
-
-*Adelie two-sample t-test for BM:* Of the 49 Adelie penguins, there are 26 females and 23 males. We would like to compare BL observations from Adelie females (F) to determine that their 'mean' is different to observations from Adelie males (M).
+*Adelie two-sample t-test for BM:* Of the 49 Adelie penguins, there are 26 females and 23 males. We would like to compare BM observations from Adelie females (F) to determine that their 'mean' is different to observations from Adelie males (M).
 
 > H~0~ : $\mu_F$ = $\mu_M$ \
 > H~1~ : $\mu_F$ $\neq$ $\mu_M$
 
-The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.42). The `t.test` function provides us with a p-value of 2.926e-06. This suggests that there is very strong evidence against *H~0~* and reject it in favour of *H~1~*.
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.59). The `t.test` function provides us with a p-value of 1.21e-7. This suggests that there is very strong evidence against *H~0~* and to reject it in favour of *H~1~*.
 
-```{r t-testA_BL, include = FALSE}
+All two-sample t-tests are provided in `Appendix H`. These tests suggest that in our sample of Adelie and Gentoo penguins, the BM 'mean' is more significant than the BL 'mean' and, therefore, more likely to reliably estimate the penguin's sex. In our sample of Chinstrap penguins, the BL 'mean' appears to be more significant than the BM 'mean'; however, this finding is limited by the Chinstrap sample size. 
+
+```{r t-testA_BM, include = FALSE}
 # Adelie data
 A <- my.penguins %>% 
   filter(species == "Adelie")
 
 #Test equal variance b/w males and females for Adelie Bill Length
-bartlett.test(bill_length_mm ~ sex, data = A) # p-value is greater than 0.05, so the assumption of equal variance is valid.
+bartlett.test(body_mass_g ~ sex, data = A) # p-value is greater than 0.05, so the assumption of equal variance is valid.
 
 #t-test for Adelie Bill Length
-t.test(bill_length_mm ~ sex, data = A, var.equal = T) # p-value is definitely much less than 0.05 and so we have strong evidence to suggest there is a difference in mean bill length between males and females for Adelie penguins.
+t.test(body_mass_g ~ sex, data = A, var.equal = T) # p-value is definitely much less than 0.05 and so we have strong evidence to suggest there is a difference in mean bill length between males and females for Adelie penguins.
 ```
 
 \vspace{12pt}
 **Objective 4 (Island Impact)**
 
-Only one species of penguin is found on all three islands (the bar chat is in `Appendix H`); this is the Adelie penguin. The boxplots below show the BL, BD, FL and BM for the Adelie penguins on each island.
+Only one species of penguin is found on all three islands; this is the Adelie penguin. The relevant bar chat is in `Appendix I`. The boxplots below show the BL, BD, FL and BM for the Adelie penguins on each island.
 
 ```{r islands_d, echo=FALSE, fig.height=3.5}
 # Boxplot of bill length for Adelie species by Island
@@ -223,12 +217,30 @@ B8 <- my.penguins %>%
 grid.arrange(B5, B6, B7, B8, ncol=2, nrow=2)
 ```
 
-The boxplots suggest that location may impact the phsyical characteristics of the Adelie penguins. To test if this impact is statistically significant, two-sample t-tests were used (and are provided in `Appendix I`). 
+The boxplots suggest that location may impact the phsyical characteristics of the Adelie penguins. for example, the range of Adelie penguins' BM is larger on Dream than other islands. To confirm the impact of location, two-sample t-tests were used (and are provided in `Appendix J`). An example hypothesis test is set out below.
 
-(Show the conclusion and significance)
+*Dream and Biscoe two-sample t-test for BM:* Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BM observations from Dream (D) to determine that body mass 'mean' on the island is significantly different to observations from Biscoe (B).
+
+> H~0~ : $\mu_D$ = $\mu_B$ \
+> H~1~ : $\mu_D$ $\neq$ $\mu_B$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.15). The `t.test` function provides us with a p-value of 0.26. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
+
+All two-sample t-tests are provided in `Appendix G`. These tests suggest that location does not appear to have have a significant impact on any of the Adelie penguins' physical characteristics. 
 
 ### Evalation
 
+This report set out the exploratory data analysis of a sample of 100 penguins from the LTER study area surrounding Palmer station. 
+
+The penguin measurement variables BL, BD, FL and BM all approximate a normal probability distribution. The accuracy of these distributions is limited as the report has confirmed its findings with Q-Q plots. This report has not confirmed whether the distribution is symmetric about the 'mean' or that the 'mean' equals the 'median' for the sample set.
+
+`Appendix F` sets out the estimates for the parameters of the BL, BD, FL and BM distributions with a 95% confidence interval. The accuracy of these estimates as estimators for the population is likely to be limited, especially for the chinstrap penguins. 
+
+The analysis highlights that BM is likely to best estimate the sex of Adelie and Gentoo penguins. For Chinstrap penguins, the BL appear to be best. Further investigation is required to identify if BM is likely to reliably estimate the sex of a penguin as the range of BM values for male and females overlap. For example, using both BM and BL measurement data may be more reliable.
+
+Adelie penguins are the only species found on all 3 islands, and the location does not appear to have a statistically significiant impact on its phsyical characteristics. Further investigation is needed to conclusively determine this; for example, exploring a larger data set filtered by year.
+
+Overall, the insights and findings outlined would be improved with access to more sample sets of the penguins' data or a larger sample size.
 
 
 \newpage
@@ -385,14 +397,14 @@ Q12 <- my.penguins %>%
   filter(species == "Chinstrap") %>%
   ggplot(aes(sample = body_mass_g, colour = sex)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Body Mass: Chinstrap") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7)  +    theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
 
-# Visuaise the QQ plots
+# Visualise the QQ plots
 TQ <- ggarrange(Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, ncol=3, nrow=4, common.legend = TRUE, legend="top")
 
 annotate_figure(TQ, left = text_grob("Sample Quantiles", rot = 90, vjust = 1), bottom = text_grob("Theoretical Quantiles"))
 ```
 
 \newpage
-### Appendix F: Confidence Intervales for Parameter Estimates
+### Appendix F: Distribution Parameter Estimates
 ```{r CIs, echo=FALSE}
 Bill_Length_summary <- tribble(~Species, ~"Mean (mm)", ~"95% CI (mm)", ~"SD", 
                                 "Adelie", 38.70, "37.98-39.42", 2.58,
@@ -425,12 +437,124 @@ kable(Body_Mass_summary, caption = "Body Mass Summary Statistics") %>%
 ```
 
 \newpage
-### Appendix G: Two-sample t-tests for Penguin Sex
+### Appendix G: Boxplots of Measurement Data by Penguin Sex
 
+```{r sex_boxplots, echo=FALSE, fig.height=11.5, fig.width=9}
+# Boxplot of body mass for Adelie by sex
+A_BM <- my.penguins %>%
+  filter(species == "Adelie") %>%
+  ggplot(aes(x = sex, y = body_mass_g)) + geom_boxplot(alpha = 0.5, color = "#33a02c") + labs(y = "Body Mass (g)", title = "Adelie") + theme(axis.title.x=element_blank()) + expand_limits(y = 2000)
+
+# Boxplot of body mass for Gentoo by sex
+G_BM <- my.penguins %>%
+  filter(species == "Gentoo") %>%
+  ggplot(aes(x = sex, y = body_mass_g)) + geom_boxplot(alpha = 0.5, color = "#33a02c") + labs(y = "Body Mass (g)", title = "Gentoo") + theme(axis.title.x=element_blank()) + expand_limits(y = 2000)
+
+# Boxplot of body mass for Chinstrap by sex
+C_BM <- my.penguins %>%
+  filter(species == "Chinstrap") %>%
+  ggplot(aes(x = sex, y = body_mass_g)) + geom_boxplot(alpha = 0.5, color = "#33a02c") + labs(y = "Body Mass (g)", title = "Chinstrap") + theme(axis.title.x=element_blank()) + expand_limits(y = 2000)
+
+# Boxplot of bill length for Adelie by sex
+A_BL <- my.penguins %>%
+  filter(species == "Adelie") %>%
+  ggplot(aes(x = sex, y = bill_length_mm)) + geom_boxplot(alpha = 0.5, color = "#a6cee3") + labs(y = "Bill Length (mm)", title = "Adelie") + theme(axis.title.x=element_blank()) + expand_limits(y = 30)
+
+# Boxplot of bill length for Gentoo by sex
+G_BL <- my.penguins %>%
+  filter(species == "Gentoo") %>%
+  ggplot(aes(x = sex, y = bill_length_mm)) + geom_boxplot(alpha = 0.5, color = "#a6cee3") + labs(y = "Bill Length (mm)", title = "Gentoo") + theme(axis.title.x=element_blank()) + expand_limits(y = 30)
+
+# Boxplot of bill length for Chinstrap by sex
+C_BL <- my.penguins %>%
+  filter(species == "Chinstrap") %>%
+  ggplot(aes(x = sex, y = bill_length_mm)) + geom_boxplot(alpha = 0.5, color = "#a6cee3") + labs(y = "Bill Length (mm)", title = "Chinstrap") + theme(axis.title.x=element_blank()) + expand_limits(y = 30)
+
+# Boxplot of bill depth for Adelie by sex
+A_BD <- my.penguins %>%
+  filter(species == "Adelie") %>%
+  ggplot(aes(x = sex, y = bill_depth_mm)) + geom_boxplot(alpha = 0.5, color = "#1f78b4") + labs(y = "Bill Depth (mm)", title = "Adelie") + theme(axis.title.x=element_blank()) + expand_limits(y = 12)
+
+# Boxplot of bill depth for Gentoo by sex
+G_BD <- my.penguins %>%
+  filter(species == "Gentoo") %>%
+  ggplot(aes(x = sex, y = bill_depth_mm)) + geom_boxplot(alpha = 0.5, color = "#1f78b4") + labs(y = "Bill Depth (mm)", title = "Gentoo") + theme(axis.title.x=element_blank()) + expand_limits(y = 12)
+
+# Boxplot of bill depth for chinstrap by sex
+C_BD <- my.penguins %>%
+  filter(species == "Chinstrap") %>%
+  ggplot(aes(x = sex, y = bill_depth_mm)) + geom_boxplot(alpha = 0.5, color = "#1f78b4") + labs(y = "Bill Depth (mm)", title = "Chinstrap") + theme(axis.title.x=element_blank()) + expand_limits(y = 12)
+
+# Boxplot of flipper length for Adelie by sex
+A_FL <- my.penguins %>%
+  filter(species == "Adelie") %>%
+  ggplot(aes(x = sex, y = flipper_length_mm)) + geom_boxplot(alpha = 0.5, color = "#b2df8a") + labs(y = "Flipper Length (mm)", title = "Adelie") + theme(axis.title.x=element_blank()) + expand_limits(y = 160)
+
+# Boxplot of flipper length for Gentoo by sex
+G_FL <- my.penguins %>%
+  filter(species == "Gentoo") %>%
+  ggplot(aes(x = sex, y = flipper_length_mm)) + geom_boxplot(alpha = 0.5, color = "#b2df8a") + labs(y = "Flipper Length (mm)", title = "Gentoo") + theme(axis.title.x=element_blank()) + expand_limits(y = 160)
+
+# Boxplot of flipper length for Chinstrap by sex
+C_FL <- my.penguins %>%
+  filter(species == "Chinstrap") %>%
+  ggplot(aes(x = sex, y = flipper_length_mm)) + geom_boxplot(alpha = 0.5, color = "#b2df8a") + labs(y = "Flipper Length (mm)", title = "Chinstrap") + theme(axis.title.x=element_blank()) + expand_limits(y = 160)
+
+ggarrange(A_BL, G_BL, C_BL, A_BD, G_BD, C_BD, A_FL, G_FL, C_FL, A_BM, G_BM, C_BM, ncol=3, nrow = 4) 
+```
+
+\newpage
+### Appendix H: Two-sample t-tests for Penguin Sex
+\vspace{11pt}
+**Adelie two-sample t-test for BL:** Of the 49 Adelie penguins, there are 26 females and 23 males. We would like to compare BL observations from Adelie females (F) to determine that their 'mean' is different to observations from Adelie males (M).
+
+> H~0~ : $\mu_F$ = $\mu_M$ \
+> H~1~ : $\mu_F$ $\neq$ $\mu_M$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.42). The `t.test` function provides us with a p-value of 2.93e-6. This suggests that there is very strong evidence against *H~0~* and to reject it in favour of *H~1~*.
+
+\vspace{11pt}
+**Adelie two-sample t-test for BM:** Of the 49 Adelie penguins, there are 26 females and 23 males. We would like to compare BL observations from Adelie females (F) to determine that their 'mean' is different to observations from Adelie males (M).
+
+> H~0~ : $\mu_F$ = $\mu_M$ \
+> H~1~ : $\mu_F$ $\neq$ $\mu_M$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.59). The `t.test` function provides us with a p-value of 1.21e-7. This suggests that there is very strong evidence against *H~0~* and reject it in favour of *H~1~*.
+
+\vspace{11pt} 
+**Gentoo two-sample t-test for BL:** Of the 33 Gentoo penguins, there are 19 females and 14 males. We would like to compare BL observations from Gentoo females (F) to determine that their 'mean' is different to observations from Gentoo males (M).
+
+> H~0~ : $\mu_F$ = $\mu_M$ \
+> H~1~ : $\mu_F$ $\neq$ $\mu_M$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is not valid (p-value = 0.56). The `t.test` function provides us with a p-value of 1.27e-4. This suggests that there is very strong evidence against *H~0~* and to reject it in favour of *H~1~*.
+\vspace{11pt}
+**Gentoo two-sample t-test for BM:** Of the 49 Adelie penguins, there are 26 females and 23 males. We would like to compare BL observations from Adelie females (F) to determine that their 'mean' is different to observations from Adelie males (M).
+
+> H~0~ : $\mu_F$ = $\mu_M$ \
+> H~1~ : $\mu_F$ $\neq$ $\mu_M$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.14). The `t.test` function provides us with a p-value of 3.30e-9. This suggests that there is very strong evidence against *H~0~* and reject it in favour of *H~1~*.
+
+\vspace{11pt}  
+**Chinstrap two-sample t-test for BL:** Of the 18 Chinstrap penguins, there are 10 females and 8 males. We would like to compare BL observations from Chinstrap females (F) to determine that their 'mean' is different to observations from Chinstrap males (M).
+
+> H~0~ : $\mu_F$ = $\mu_M$ \
+> H~1~ : $\mu_F$ $\neq$ $\mu_M$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is not valid (p-value = 0.97). The `t.test` function provides us with a p-value of 4.05e-4. This suggests that there is very strong evidence against *H~0~* and to reject it in favour of *H~1~*.
+
+\vspace{11pt}  
+**Chinstrap two-sample t-test for BM:** Of the 18 Adelie penguins, there are 10 females and 8 males. We would like to compare BL observations from Chinstrap females (F) to determine that their 'mean' is different to observations from Chinstrap males (M).
+
+> H~0~ : $\mu_F$ = $\mu_M$ \
+> H~1~ : $\mu_F$ $\neq$ $\mu_M$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.99). The `t.test` function provides us with a p-value of 2.08e-2. This suggests that there is very strong evidence against *H~0~* and reject it in favour of *H~1~*.
 
 
 \newpage
-### Appendix H: Bar chart of Penguin Species Location
+### Appendix I: Bar chart of Penguin Species Location
 ```{r A_islands, echo=FALSE, message=FALSE, warning=FALSE, fig.height=8}
 # How many penguins of each species are on each island?
 locations_species <- my.penguins %>%
@@ -445,8 +569,71 @@ locations_species %>%
 ```
 
 \newpage 
-### Appendix I: Two-sample t-tests for Adelie location
+### Appendix J: Two-sample t-tests for Adelie location
 
+\vspace{10pt}
+**Dream and Biscoe two-sample t-test for BL:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BL observations from Dream (D) to determine that bill length 'mean' on the island is significantly different to observations from Biscoe (B).
+
+> H~0~ : $\mu_D$ = $\mu_B$ \
+> H~1~ : $\mu_D$ $\neq$ $\mu_B$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.21). The `t.test` function provides us with a p-value of 0.19. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
+
+\vspace{10pt}  
+**Dream and Torgersen two-sample t-test for BL:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BL observations from Dream (D) to determine that bill length 'mean' on the island is significantly different to observations from Torgersen (T).
+
+> H~0~ : $\mu_D$ = $\mu_T$ \
+> H~1~ : $\mu_D$ $\neq$ $\mu_T$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.77). The `t.test` function provides us with a p-value of 0.51. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
+
+\vspace{10pt}  
+**Torgersen and Biscoe two-sample t-test for BD:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BD observations from Torgersen (T) to determine that bill depth 'mean' on the island is significantly different to observations from Biscoe (B).
+
+> H~0~ : $\mu_T$ = $\mu_B$ \
+> H~1~ : $\mu_T$ $\neq$ $\mu_B$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.33). The `t.test` function provides us with a p-value of 0.63. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
+
+\vspace{10pt}  
+**Torgersen and Dream two-sample t-test for BD:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BD observations from Torgersen (T) to determine that bill depth 'mean' on the island is significantly different to observations from Dream (D).
+
+> H~0~ : $\mu_T$ = $\mu_D$ \
+> H~1~ : $\mu_T$ $\neq$ $\mu_D$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.33). The `t.test` function provides us with a p-value of 0.82. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
+
+\vspace{10pt}  
+**Torgersen and Biscoe two-sample t-test for FL:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare FL observations from Torgersen (T) to determine that flipper length 'mean' on the island is significantly different to observations from Biscoe (B).
+
+> H~0~ : $\mu_T$ = $\mu_B$ \
+> H~1~ : $\mu_T$ $\neq$ $\mu_B$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.77). The `t.test` function provides us with a p-value of 0.48. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
+
+\vspace{10pt}  
+**Torgersen and Dream two-sample t-test for FL:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare FL observations from Torgersen (T) to determine that flipper length 'mean' on the island is significantly different to observations from Dream (D).
+
+> H~0~ : $\mu_T$ = $\mu_D$ \
+> H~1~ : $\mu_T$ $\neq$ $\mu_D$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.41). The `t.test` function provides us with a p-value of 0.94. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
+
+\vspace{10pt}  
+**Dream and Biscoe two-sample t-test for BM:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BM observations from Dream (D) to determine that body mass 'mean' on the island is significantly different to observations from Biscoe (B).
+
+> H~0~ : $\mu_D$ = $\mu_B$ \
+> H~1~ : $\mu_D$ $\neq$ $\mu_B$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.15). The `t.test` function provides us with a p-value of 0.26. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
+
+\vspace{10pt}  
+**Dream and Torgersen two-sample t-test for BM:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BM observations from Dream (D) to determine that body mass 'mean' on the island is significantly different to observations from Torgersen (T).
+
+> H~0~ : $\mu_D$ = $\mu_T$ \
+> H~1~ : $\mu_D$ $\neq$ $\mu_T$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.56). The `t.test` function provides us with a p-value of 0.33. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
 
 \newpage
 ### Bibliography [CHECK AS NOT ALL ARE APPEARING]
