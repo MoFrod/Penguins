@@ -1,0 +1,452 @@
+---
+title: "MAS8403: Palmer Achipelago Penguins"
+author: "210431461  |   21/10/22"
+output: pdf_document
+fontsize: 12pt
+citation_package: natbib
+bibliography: "references.bib"
+biblio-style: "apalike"
+link-citations: TRUE
+---
+
+\vspace{-0.7cm}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir= normalizePath('..'))
+```
+
+```{r ProjectTemplate, include = FALSE}
+library(ProjectTemplate)
+load.project()
+```
+### Introduction
+
+To the West of the Antarctic Peninsula, extending North and South of the Palmer Basin, is the Palmer Long Term Ecological Research (LTER) (@LTER) study area. Midway down the the Antarctic Peninsula, on Anvers Island, is [Palmer Station](https://www.usap.gov/videoclipsandmaps/palwebcam.cfm?t=1). Researchers are staffed there to monitor the polar marine biome, including the local penguin population (@Palmer). 
+
+The LTER researchers are using penguin-borne sensors to inform long-term studies on penguin population dynamics and improve our understanding of how Antarctic penguins are adjusting to rapid climate changes (@PS). The most dramatic effects of climate change are being observed in our polar regions (@PS). 
+
+This report is informed by a dataset called `penguins` from the `pamlerpenguins` R package; it is one of two packages provided by Palmer LTER researchers (@RStudio). The dataset is pre-processed, so accuracy and quality are assumed. The dataset provides 333 observations across 8 variables; it is assumed that this is a sample of the data collected by Palmer Station. The `set.seed()` and `sample` functions in R were to generate a random, representative sample to inform this report.
+
+### Objectives
+
+The exploratory data analysis outlined in this report explores a sample of 100 penguins from the `penguins` dataset. There are four objectives for this analysis:
+
+1. identify an appropriate probability distribution to represent at least one measurement variable (bill length, bill depth, flipper length and body mass);
+
+2. find estimates for the parameters of the distribution of your data;
+
+3. identify which variables are likely to reliably estimate the sex of a penguin; and
+
+4. identify if the penguins' location (island) appears to have a significant impact on any of its physical characteristics. 
+
+### Data Exploration
+
+\vspace{12pt}
+**Objective 1 (Distribution)**
+
+The data sample includes 8 variables that provide information relating to the 100 penguins. The species (Adelie, Chinstrap or Gentoo), island (Biscoe, Dream or Torgerson), and sex (male or female) are nominal, qualitative values. The year is discrete quantitative data that identifies when the variables were recorded (2007, 2008 or 2009). The variables bill length (mm), bill depth (mm), flipper length (mm) and body mass (g) are quantitative, numerical measures of each penguin. These 4 variables of measurement data are continuous and random; the variables adopt a smooth range of values (@L1). The plots below show this (all histograms are provided in `Appendix A`). 
+
+```{r histograms_1_2, echo=FALSE, message=FALSE, warning=FALSE, fig.height=2.4}
+# Histogram of bill length for penguins
+H1 <- my.penguins %>%
+  ggplot(aes(bill_length_mm)) + geom_histogram(binwidth = 2, fill = "#a6cee3", color = "#1f78b4") + labs(x = "Bill Length (mm)", y = "Count") + scale_x_continuous(limits = c(30, 60))
+
+# Histogram of bill depth for penguins
+H2 <- my.penguins %>%
+  ggplot(aes(bill_depth_mm)) + geom_histogram(binwidth = 0.7, fill = "#1f78b4", color = "#a6cee3") + labs(x = "Bill Depth (mm)", y = "Count")  + scale_x_continuous(limits = c(10, 25))
+
+# Group Histograms
+grid.arrange(H1, H2, ncol=2, nrow=1)
+```
+These histograms visualise the distribution of penguins' bill length (BL), bill depth (BD), flipper length (FL), and body mass (BM) data. The measurement data appears to be multimodal with some variance. 
+
+```{r summary, include=FALSE}
+my.summary <- tribble(~"Variable", ~"Bill Length (mm)", ~"Bill Depth (mm)", ~"Flipper Length (mm)", ~"Body Mass (g)", "Mean", 43.25, 17.13, 199.39, 4148.25, "SD", 5.31, 1.93, 13.69, 796.44, "CoV", 12.28, 11.27, 6.87, 19.20)
+
+kable(my.summary, caption = "Summary Statistics of Penguin Variables") %>%
+  kable_classic_2(full_width = F, latex_options = "HOLD_position")
+```
+
+These histograms suggest that there may be elements, such as the penguins' species, which are influencing the distribution of the data. 
+
+Filtering the data demonstrates that the BL, BD, FL, and BM changes by penguin species. The boxplots for BL and DP are provided below (all boxplots are provided in `Appendix B`).
+
+```{r boxplots_1_2, echo=FALSE, fig.height=2.4}
+# Boxplot of bill length for penguin species
+B1 <- my.penguins %>%
+  ggplot(aes(x = species, y = bill_length_mm)) + geom_boxplot(alpha = 0.5, color = "#a6cee3") + labs(y = "Bill Length (mm)") + theme(axis.title.x=element_blank()) + expand_limits(y = 30)
+
+# Boxplot of bill depth for penguin species
+B2 <- my.penguins %>%
+  ggplot(aes(x = species, y = bill_depth_mm)) + geom_boxplot(alpha = 0.5, color = "#1f78b4") + labs(y = "Bill Depth (mm)") + theme(axis.title.x=element_blank()) + expand_limits(y = 12)
+
+grid.arrange(B1, B2, ncol=2, nrow=1)
+```
+
+It is likely to be more significant, therefore, to observe the distribution, and estimate the parameters of the population, separately for each penguin species. For each species, the distribution of BL and BD are visualised below (all density distributions are provided in `Appendix C`).
+
+```{r pdistributions_1_2, echo=FALSE, fig.height=3}
+# Density Distribution of bill length for penguins by species
+D1 <- my.penguins %>%
+  ggplot(aes(x = bill_length_mm, colour = species)) + geom_density(kernel = "gaussian", size = 1.5) + labs(x = "Bill Length (mm)", y = "Density", color = "Species") +   theme(legend.position="none") + scale_x_continuous(limits = c(30, 60)) + scale_color_brewer(palette = "Paired")
+
+# Density Distribution of bill depth for penguins by species
+D2 <- my.penguins %>%
+  ggplot(aes(x = bill_depth_mm, colour = species)) + geom_density(kernel = "gaussian", size = 1.5) + labs(x = "Bill Depth (mm)", y = "Density") +   theme(legend.position="none") + scale_x_continuous(limits = c(10, 25)) + scale_color_brewer(palette = "Paired")
+
+ggarrange(D1, D2, ncol=2, nrow=1, common.legend = TRUE, legend="top")
+```
+
+Measurement data (e.g. weight or height) of a population frequently follows a normal distribution. Initially, however, the density distributions of BL, BD, FL, and BM of the penguin species do not appear to follow a normal distribution. On closer inspection, some variables do appear to approximate a normal distribution, especially the BL, FL and BM of Adelie penguins. 
+
+It is important to remember that our data sample is small. In the sample of 100 penguins, there are 49 Adelie, 33 Gentoo, and 18 Chinstrap. It is likely that there is too little measurement data for Chinstrap penguins to accurately confirm its data distribution. 
+
+The Q-Q plots below, therefore, test whether or not the BL and BD data of Adelie and Gentoo penguins are normally distributed (all Q-Q plots are provided in `Appendix D`).
+
+```{r qq_BL_BD, echo = FALSE, fig.height=2.7}
+# QQ-plot of bill length 
+QQ_BL <- my.penguins %>%
+  filter(species != "Chinstrap") %>%
+  ggplot(aes(sample = bill_length_mm, colour = species)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Bill Length", color = "Species") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7) + theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# QQ-plot of bill depth 
+QQ_BD <- my.penguins %>%
+  filter(species != "Chinstrap") %>%
+  ggplot(aes(sample = bill_depth_mm, colour = species)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Bill Depth", color = "Species") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7) +theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+QQ_BL_BD <- ggarrange(QQ_BL, QQ_BD, ncol=2, nrow=1, common.legend = TRUE, legend="top")
+
+annotate_figure(QQ_BL_BD, left = text_grob("Sample Quantiles", rot = 90, vjust = 1), bottom = text_grob("Theoretical Quantiles"))
+```
+
+These Q-Q plots demonstrate that the BL, BD, FL and BM of Adelie and Gentoo penguins does approximate a normal distribution. It is important to note that the density distributions suggest there is another element influencing the data distribution. `Appendix E` presents Q-Q plots that clearly demonstrate the data distributions for male and female penguins are different for all species, and this will be explored further in `Objective 2`.
+
+\vspace{12pt}
+**Objective 2 (Distribution Parameters)**
+
+A normal distribution is characterised by two paramenters; these are the 'mean' and 'standard deviation'.
+
+The 'mean', its 95% 'confidence interval' (95% CI), and 'standard deviation' (SD) of BL and BD from the sample data for each penguin species are presented in the tables below (all parameters are provided in `Appendix F`). 
+
+```{r estimators, include=FALSE}
+Species_summary <- tribble(~Variable, ~"A:Mean", ~"A:SD", ~"G:Mean", ~"G:SD", ~"C:Mean", ~"C:SD", "Bill Length (mm)", 38.70, 2.58, 46.88, 3.08, 48.99,2.68, "Bill Depth (mm)", 18.15, 1.21, 14.88, 0.91, 18.44, 1.19, "Flippper Length (mm)", 189.78, 6.80, 189.78, 6.80, 216.42, 5.68, "Body Mass (g)", 3691.84, 452.38, 3691.84, 452.38, 5075.76, 481.76)
+
+kable(Species_summary, caption = "Summary Statistics of Penguin Species") %>%
+  kable_classic_2(full_width = F, latex_options = "HOLD_position")
+```
+
+```{r estimators_CIs, echo=FALSE}
+Bill_Length_summary <- tribble(~Species, ~"Mean (mm)", ~"95% CI (mm)", ~"SD", 
+                                "Adelie", 38.70, "37.98-39.42", 2.58,
+                                "Gentoo", 46.88, "45.83-47.93", 3.09,
+                                "Chinstrap", 48.99, "48.08-49.90", 2.68)
+
+kable(Bill_Length_summary, caption = "Bill Length Summary Statistics") %>%
+  kable_classic_2(full_width = F, latex_options = "HOLD_position")
+
+Bill_Depth_summary <- tribble(~Species, ~"Mean (mm)", ~"95% CI (mm)", ~"SD", 
+                               "Adelie", 18.15, "17.81-18.49", 1.21, 
+                               "Gentoo", 14.88, "14.57-15.19", 0.91, 
+                               "Chinstrap", 18.44, "18.03-18.85", 1.19)
+
+kable(Bill_Depth_summary, caption = "Bill Depth Summary Statistics") %>%
+  kable_classic_2(full_width = F, latex_options = "HOLD_position")
+
+```
+
+The 'mean' and 'standard deviation' as parameters of our BL, BD, FL and BM distributions will be limited as estimators for the population parameters. There is only one sample to inform the estimators and, when filtered by species, the sample set is small. The 95% 'confidence interval', therefore, provides us with the interval that indicates how close the estimated 'mean' is likely to be to the true value; we can be 95% confident that the population mean will be between this interval. 
+
+In accordance with the central limit theorem, however, as we increase the sample size the sample 'mean' will approach the population 'mean'. Similarly, if there were more sample sets, the 'mean' and 'standard deviation' of the samples' parameters would better estimate the population parameters.
+
+```{r notes, include=FALSE}
+#[MLE?!] [It is important to note that Normal distributions also have two other key characteristics: the mean, median and mode are exactly the same; and, the distribution is symmetric about the mean - half the values fall below the mean and half above the mean. TO EXPLORE IF THERE IS SPACE]
+```
+
+\vspace{12pt}
+**Objective 3 (Estimate Penguin Sex)**
+
+LTER researchers at Palmer station would like to estimate the sec of a penguin from measurement data to avoid the need for invasive procedures that cause penguin distress. 
+
+The Q-Q plots in `Appendix E` appear to suggest that the data distribution of male and female penguins differ, regardless of their species. The difference between the BL and BM is most visually obvious. Two-sample t-tests were used to test whether this difference is statistically significant. 
+
+These tests tell us that in our sample of Adelie and Gentoo penguins, the difference between males and females BM 'mean' is more statistically significant than BL 'mean'. In our sample of Chinstrap penguins, the difference between males and females BL 'mean' is more statistically significant than BM 'mean'. 
+
+The BM two-sample t-test for Adelie penguins is set out below (all two-sample t-tests are provided in `Appendix G`.) 
+
+*Adelie two-sample t-test for BM:* Of the 49 Adelie penguins, there are 26 females and 23 males. We would like to compare BL observations from Adelie females (F) to determine that their 'mean' is different to observations from Adelie males (M).
+
+> H~0~ : $\mu_F$ = $\mu_M$ \
+> H~1~ : $\mu_F$ $\neq$ $\mu_M$
+
+The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.42). The `t.test` function provides us with a p-value of 2.926e-06. This suggests that there is very strong evidence against *H~0~* and reject it in favour of *H~1~*.
+
+```{r t-testA_BL, include = FALSE}
+# Adelie data
+A <- my.penguins %>% 
+  filter(species == "Adelie")
+
+#Test equal variance b/w males and females for Adelie Bill Length
+bartlett.test(bill_length_mm ~ sex, data = A) # p-value is greater than 0.05, so the assumption of equal variance is valid.
+
+#t-test for Adelie Bill Length
+t.test(bill_length_mm ~ sex, data = A, var.equal = T) # p-value is definitely much less than 0.05 and so we have strong evidence to suggest there is a difference in mean bill length between males and females for Adelie penguins.
+```
+
+\vspace{12pt}
+**Objective 4 (Island Impact)**
+
+Only one species of penguin is found on all three islands (the bar chat is in `Appendix H`); this is the Adelie penguin. The boxplots below show the BL, BD, FL and BM for the Adelie penguins on each island.
+
+```{r islands_d, echo=FALSE, fig.height=3.5}
+# Boxplot of bill length for Adelie species by Island
+B5 <- my.penguins %>%
+  filter(species == "Adelie") %>%
+  ggplot(aes(x = island, y = bill_length_mm)) + geom_boxplot(alpha = 0.5, color = "#a6cee3") + labs(y = "Bill Length (mm)") + theme(axis.title.x=element_blank()) + expand_limits(y = 30)
+
+# Boxplot of bill depth for Adelie species by Island
+B6 <- my.penguins %>%
+  filter(species == "Adelie") %>%
+  ggplot(aes(x = island, y = bill_depth_mm)) + geom_boxplot(alpha = 0.5, color = "#1f78b4") + labs(y = "Bill Depth (mm)") + theme(axis.title.x=element_blank()) + expand_limits(y = 12)
+
+# Boxplot of flipper length for Adelie species by Island
+B7 <- my.penguins %>%
+  filter(species == "Adelie") %>%
+  ggplot(aes(x = island, y = flipper_length_mm)) + geom_boxplot(alpha = 0.5, color = "#b2df8a") + labs(y = "Flipper Length (mm)") + theme(axis.title.x=element_blank()) + expand_limits(y = 160)
+
+# Boxplot of body mass for Adelie species by Island
+B8 <- my.penguins %>%
+  filter(species == "Adelie") %>%
+  ggplot(aes(x = island, y = body_mass_g)) + geom_boxplot(alpha = 0.5, color = "#33a02c") + labs(y = "Body Mass (g)") + theme(axis.title.x=element_blank()) + expand_limits(y = 2000)
+
+# Arrange boxplots on grid (USE IN REPORT)
+grid.arrange(B5, B6, B7, B8, ncol=2, nrow=2)
+```
+
+The boxplots suggest that location may impact the phsyical characteristics of the Adelie penguins. To test if this impact is statistically significant, two-sample t-tests were used (and are provided in `Appendix I`). 
+
+(Show the conclusion and significance)
+
+### Evalation
+
+
+
+\newpage
+### Appendix A: Histograms of Measurement Variables
+```{r histograms, echo=FALSE, message=FALSE, warning=FALSE, fig.height=11.5, fig.width=9}
+# Histogram of bill length for penguins
+H1 <- my.penguins %>%
+  ggplot(aes(bill_length_mm)) + geom_histogram(binwidth = 2, fill = "#a6cee3", color = "#1f78b4") + labs(x = "Bill Length (mm)", y = "Count") + scale_x_continuous(limits = c(30, 60))
+
+# Histogram of bill depth for penguins
+H2 <- my.penguins %>%
+  ggplot(aes(bill_depth_mm)) + geom_histogram(binwidth = 0.7, fill = "#1f78b4", color = "#a6cee3") + labs(x = "Bill Depth (mm)", y = "Count")  + scale_x_continuous(limits = c(10, 25))
+
+# Histogram of flipper length
+H3 <- my.penguins %>%
+  ggplot(aes(flipper_length_mm)) + geom_histogram(binwidth = 4.8, fill = "#b2df8a", color = "#33a02c") + labs(x = "Flipper Length (mm)", y = "Count")  + scale_x_continuous(limits = c(150, 250))
+
+# Histogram of flipper length
+H4 <- my.penguins %>%
+  ggplot(aes(body_mass_g)) + geom_histogram(binwidth = 300, fill = "#33a02c", color = "#b2df8a") + labs(x = "Body Mass (g)", y = "Count") + scale_x_continuous(limits = c(2000, 7000))
+
+# Group Histograms
+grid.arrange(H1, H2, H3, H4, ncol=2, nrow=2)
+```
+
+### Appendix B: Boxplots of Measurement Variables by Species
+```{r boxplots, echo=FALSE, fig.height=11.5, fig.width=9}
+# Boxplot of bill length for penguin species
+B1 <- my.penguins %>%
+  ggplot(aes(x = species, y = bill_length_mm)) + geom_boxplot(alpha = 0.5, color = "#a6cee3") + labs(y = "Bill Length (mm)") + theme(axis.title.x=element_blank()) + expand_limits(y = 30)
+
+# Boxplot of bill depth for penguin species
+B2 <- my.penguins %>%
+  ggplot(aes(x = species, y = bill_depth_mm)) + geom_boxplot(alpha = 0.5, color = "#1f78b4") + labs(y = "Bill Depth (mm)") + theme(axis.title.x=element_blank()) + expand_limits(y = 12)
+
+# Boxplot of flipper length for penguin species
+B3 <- my.penguins %>%
+  ggplot(aes(x = species, y = flipper_length_mm)) + geom_boxplot(alpha = 0.5, color = "#b2df8a") + labs(y = "Flipper Length (mm)") + theme(axis.title.x=element_blank()) + expand_limits(y = 160)
+
+# Boxplot of body mass for penguin species
+B4 <- my.penguins %>%
+  ggplot(aes(x = species, y = body_mass_g)) + geom_boxplot(alpha = 0.5, color = "#33a02c") + labs(y = "Body Mass (g)") + theme(axis.title.x=element_blank()) + expand_limits(y = 2000)
+
+grid.arrange(B1, B2, B3, B4, ncol=2, nrow=2)
+```
+
+### Appendix C: Density Distributions of Measurement Variables by Species
+```{r pdistributions, echo=FALSE, fig.height=11.5, fig.width=9}
+# Density Distribution of bill length for penguins by species
+D1 <- my.penguins %>%
+  ggplot(aes(x = bill_length_mm, colour = species)) + geom_density(kernel = "gaussian", size = 1.5) + labs(x = "Bill Length (mm)", y = "Density", color = "Species") +   theme(legend.position="none") + scale_x_continuous(limits = c(30, 60)) + scale_color_brewer(palette = "Paired")
+
+# Density Distribution of bill depth for penguins by species
+D2 <- my.penguins %>%
+  ggplot(aes(x = bill_depth_mm, colour = species)) + geom_density(kernel = "gaussian", size = 1.5) + labs(x = "Bill Depth (mm)", y = "Density") +   theme(legend.position="none") + scale_x_continuous(limits = c(10, 25)) + scale_color_brewer(palette = "Paired")
+
+# Density Distribution of flipper length for penguins by species
+D3 <- my.penguins %>%
+  ggplot(aes(x = flipper_length_mm, colour = species)) + geom_density(kernel = "gaussian", size = 1.5) + labs(x = "Flipper Length (mm)", y = "Density") +   theme(legend.position="none") + scale_x_continuous(limits = c(150, 250)) + scale_color_brewer(palette = "Paired")
+
+# Density Distribution of flipper length for penguins by species
+D4 <- my.penguins %>%
+  ggplot(aes(x = body_mass_g, colour = species)) + geom_density(kernel = "gaussian", size = 1.5) + labs(x = "Body Mass (g)", y = "Density") +   theme(legend.position="none") + scale_x_continuous(limits = c(2000, 7000)) + scale_color_brewer(palette = "Paired")
+
+ggarrange(D1, D2, D3, D4, ncol=2, nrow=2, common.legend = TRUE, legend="top")
+```
+
+### Appendix D: Q-Q Plots of Measurement Variables of Adelies and Gentoos
+```{r qq_all, echo=FALSE, fig.height=11.5, fig.width=9, message=FALSE, warning=FALSE}
+# QQ-plot of bill length 
+QQ_BL <- my.penguins %>%
+  ggplot(aes(sample = bill_length_mm, colour = species)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Bill Length", color = "Species") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7) + theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# QQ-plot of bill depth 
+QQ_BD <- my.penguins %>%
+  ggplot(aes(sample = bill_depth_mm, colour = species)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Bill Depth", color = "Species") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7) +theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# QQ-plot of flipper length 
+QQ_FL <- my.penguins %>%
+  ggplot(aes(sample = flipper_length_mm, colour = species)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Flipper Length", color = "Species") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7) + theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# QQ-plot of body mass
+QQ_BM <- my.penguins %>%
+  ggplot(aes(sample = body_mass_g, colour = species)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Body Mass", color = "Species") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7) + theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+QQ_all <- ggarrange(QQ_BL, QQ_BD, QQ_FL, QQ_BM, ncol=2, nrow=2, common.legend = TRUE, legend="top")
+
+annotate_figure(QQ_all, left = text_grob("Sample Quantiles", rot = 90, vjust = 1), bottom = text_grob("Theoretical Quantiles"))
+```
+
+\newpage 
+
+### Appendix E: Q-Q Plots of Measurement Variables by Species
+
+```{r AA, echo=FALSE, fig.height=11.5, fig.width=9}
+# QQ-plot of bill length for Adelie 
+Q1 <- my.penguins %>%
+  filter(species == "Adelie") %>%
+  ggplot(aes(sample = bill_length_mm, colour = sex)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Bill Length: Adelie", color = "Sex") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7)  +    theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# QQ-plot of bill length for Gentoo 
+Q2 <- my.penguins %>%
+  filter(species == "Gentoo") %>%
+  ggplot(aes(sample = bill_length_mm, colour = sex)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Bill Length: Gentoo") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7)  +    theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# QQ-plot of bill length for Chinstrap 
+Q3 <- my.penguins %>%
+  filter(species == "Chinstrap") %>%
+  ggplot(aes(sample = bill_length_mm, colour = sex)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Bill Length: Chinstrap") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7)  +    theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# QQ-plot of bill depth for Adelie 
+Q4 <- my.penguins %>%
+  filter(species == "Adelie") %>%
+  ggplot(aes(sample = bill_depth_mm, colour = sex)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Bill Depth: Adelie", color = "Sex") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7)  +    theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# QQ-plot of bill depth for Gentoo 
+Q5 <- my.penguins %>%
+  filter(species == "Gentoo") %>%
+  ggplot(aes(sample = bill_depth_mm, colour = sex)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Bill Depth: Gentoo") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7)  +    theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# QQ-plot of bill depth for Chinstrap 
+Q6 <- my.penguins %>%
+  filter(species == "Chinstrap") %>%
+  ggplot(aes(sample = bill_depth_mm, colour = sex)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Bill Depth: Chinstrap") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7)  +    theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# QQ-plot of flipper length for Adelie 
+Q7 <- my.penguins %>%
+  filter(species == "Adelie") %>%
+  ggplot(aes(sample = flipper_length_mm, colour = sex)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Flipper Length: Adelie", color = "Sex") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7)  +    theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# QQ-plot of flipper length for Gentoo 
+Q8 <- my.penguins %>%
+  filter(species == "Gentoo") %>%
+  ggplot(aes(sample = flipper_length_mm, colour = sex)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Flipper Length: Gentoo") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7)  +    theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# QQ-plot of flipper length for Chinstrap 
+Q9 <- my.penguins %>%
+  filter(species == "Chinstrap") %>%
+  ggplot(aes(sample = flipper_length_mm, colour = sex)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Flipper Length: Chinstrap") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7)  +    theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# QQ-plot of body mass for Adelie 
+Q10 <- my.penguins %>%
+  filter(species == "Adelie") %>%
+  ggplot(aes(sample = body_mass_g, colour = sex)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Body Mass: Adelie", color = "Sex") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7)  +    theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# QQ-plot of body mass for Gentoo 
+Q11 <- my.penguins %>%
+  filter(species == "Gentoo") %>%
+  ggplot(aes(sample = body_mass_g, colour = sex)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Body Mass: Gentoo") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7)  +    theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+
+# QQ-plot of body mass for Chinstrap 
+Q12 <- my.penguins %>%
+  filter(species == "Chinstrap") %>%
+  ggplot(aes(sample = body_mass_g, colour = sex)) + geom_qq() + labs(y = "Sample Quantiles", x = "Theoretical Quantiles", title = "Body Mass: Chinstrap") + scale_color_brewer(palette = "Paired") + stat_qq_line(alpha = 0.7)  +    theme(legend.position="none", axis.title.y=element_blank(), axis.title.x=element_blank())
+
+# Visuaise the QQ plots
+TQ <- ggarrange(Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, ncol=3, nrow=4, common.legend = TRUE, legend="top")
+
+annotate_figure(TQ, left = text_grob("Sample Quantiles", rot = 90, vjust = 1), bottom = text_grob("Theoretical Quantiles"))
+```
+
+\newpage
+### Appendix F: Confidence Intervales for Parameter Estimates
+```{r CIs, echo=FALSE}
+Bill_Length_summary <- tribble(~Species, ~"Mean (mm)", ~"95% CI (mm)", ~"SD", 
+                                "Adelie", 38.70, "37.98-39.42", 2.58,
+                                "Gentoo", 46.88, "45.83-47.93", 3.09,
+                                "Chinstrap", 48.99, "48.08-49.90", 2.68)
+kable(Bill_Length_summary, caption = "Bill Length Summary Statistics") %>%
+  kable_classic_2(full_width = F, latex_options = "HOLD_position")
+
+Bill_Depth_summary <- tribble(~Species, ~"Mean (mm)", ~"95% CI (mm)", ~"SD", 
+                               "Adelie", 18.15, "17.81-18.49", 1.21, 
+                               "Gentoo", 14.88, "14.57-15.19", 0.91, 
+                               "Chinstrap", 18.44, "18.03-18.85", 1.19)
+kable(Bill_Depth_summary, caption = "Bill Depth Summary Statistics") %>%
+  kable_classic_2(full_width = F, latex_options = "HOLD_position")
+
+Flipper_Length_summary <- tribble(~Species, ~"Mean (mm)", ~"95% CI (mm)", ~"SD",
+                               "Adelie", 189.78, "187.88-191.68", 6.80,
+                               "Gentoo", 216.42, "214.48-218.36", 5.68,
+                               "Chinstrap", 194.33, "192.06-196.60", 6.65)
+kable(Flipper_Length_summary, caption = "Flipper Length Summary Statistics") %>%
+  kable_classic_2(full_width = F, latex_options = "HOLD_position")
+
+Body_Mass_summary <- tribble(~Species, ~"Mean (g)", ~"95% CI (g)", ~"SD", 
+                               "Adelie", 3691.84, "3565.18-3818.50", 452.38,
+                               "Gentoo", 5075.76, "4911.39-5240.13", 481.76,
+                               "Chinstrap", 3690.28, "3542.83-3837.73", 432.17)
+kable(Body_Mass_summary, caption = "Body Mass Summary Statistics") %>%
+  kable_classic_2(full_width = F, latex_options = "HOLD_position")
+
+```
+
+\newpage
+### Appendix G: Two-sample t-tests for Penguin Sex
+
+
+
+\newpage
+### Appendix H: Bar chart of Penguin Species Location
+```{r A_islands, echo=FALSE, message=FALSE, warning=FALSE, fig.height=8}
+# How many penguins of each species are on each island?
+locations_species <- my.penguins %>%
+  group_by(island, species) %>%
+  summarise(species) %>%
+  count(species) %>%
+  as_tibble()
+
+# Quick plot count of each species per island
+locations_species %>%
+  ggplot(aes(x = island, y = n, fill = species)) + geom_bar(stat="identity", position="dodge") + labs(title = "Penguins Species per Island", x = "Location", y = "Count", fill = "Species") + scale_fill_brewer(palette = "Paired")
+```
+
+\newpage 
+### Appendix I: Two-sample t-tests for Adelie location
+
+
+\newpage
+### Bibliography [CHECK AS NOT ALL ARE APPEARING]
