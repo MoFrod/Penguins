@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.17)  19 OCT 2022 18:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.17)  20 OCT 2022 12:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**MAS8403_Penguins!.tex
-(./MAS8403_Penguins!.tex
+**MAS8403_Penguins_210431461.tex
+(./MAS8403_Penguins_210431461.tex
 LaTeX2e <2022-06-01> patch level 5
 L3 programming layer <2022-09-28> (c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
@@ -456,7 +456,7 @@ Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 File: l3backend-pdftex.def 2022-09-28 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count310
 \l__pdf_internal_box=\box72
-) (./MAS8403_Penguins!.aux
+) (./MAS8403_Penguins_210431461.aux
 
 LaTeX Warning: Label `tab:CIs' multiply defined.
 
@@ -467,7 +467,7 @@ LaTeX Warning: Label `tab:CIs' multiply defined.
 LaTeX Warning: Label `tab:CIs' multiply defined.
 
 )
-\openout1 = `MAS8403_Penguins!.aux'.
+\openout1 = `MAS8403_Penguins_210431461.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 108.
 LaTeX Font Info:    ... okay on input line 108.
@@ -494,9 +494,9 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package hyperref Info: Link coloring OFF on input line 108.
-(./MAS8403_Penguins!.out) (./MAS8403_Penguins!.out)
+(./MAS8403_Penguins_210431461.out) (./MAS8403_Penguins_210431461.out)
 \@outlinefile=\write3
-\openout3 = `MAS8403_Penguins!.out'.
+\openout3 = `MAS8403_Penguins_210431461.out'.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -568,128 +568,128 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [1
 
 {c:/Users/morga/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<MAS8403_Penguins!_files/figure-latex/histograms_1_2-1.pdf, id=100, 469.755pt x 172.645pt>
-File: MAS8403_Penguins!_files/figure-latex/histograms_1_2-1.pdf Graphic file (type pdf)
-<use MAS8403_Penguins!_files/figure-latex/histograms_1_2-1.pdf>
-Package pdftex.def Info: MAS8403_Penguins!_files/figure-latex/histograms_1_2-1.pdf  used on input line 189.
+<MAS8403_Penguins_210431461_files/figure-latex/histograms_1_2-1.pdf, id=100, 469.755pt x 172.645pt>
+File: MAS8403_Penguins_210431461_files/figure-latex/histograms_1_2-1.pdf Graphic file (type pdf)
+<use MAS8403_Penguins_210431461_files/figure-latex/histograms_1_2-1.pdf>
+Package pdftex.def Info: MAS8403_Penguins_210431461_files/figure-latex/histograms_1_2-1.pdf  used on input line 189.
 (pdftex.def)             Requested size: 469.75386pt x 172.64456pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--195
+Underfull \hbox (badness 10000) in paragraph at lines 189--196
 [][]
  []
 
-<MAS8403_Penguins!_files/figure-latex/boxplots_1_2-1.pdf, id=101, 469.755pt x 172.645pt>
-File: MAS8403_Penguins!_files/figure-latex/boxplots_1_2-1.pdf Graphic file (type pdf)
-<use MAS8403_Penguins!_files/figure-latex/boxplots_1_2-1.pdf>
-Package pdftex.def Info: MAS8403_Penguins!_files/figure-latex/boxplots_1_2-1.pdf  used on input line 200.
+<MAS8403_Penguins_210431461_files/figure-latex/boxplots_1_2-1.pdf, id=101, 469.755pt x 172.645pt>
+File: MAS8403_Penguins_210431461_files/figure-latex/boxplots_1_2-1.pdf Graphic file (type pdf)
+<use MAS8403_Penguins_210431461_files/figure-latex/boxplots_1_2-1.pdf>
+Package pdftex.def Info: MAS8403_Penguins_210431461_files/figure-latex/boxplots_1_2-1.pdf  used on input line 201.
 (pdftex.def)             Requested size: 469.75386pt x 172.64456pt.
-[2 <./MAS8403_Penguins!_files/figure-latex/histograms_1_2-1.pdf> <./MAS8403_Penguins!_files/figure-latex/boxplots_1_2-1.pdf>]
-<MAS8403_Penguins!_files/figure-latex/pdistributions_1_2-1.pdf, id=121, 469.755pt x 216.81pt>
-File: MAS8403_Penguins!_files/figure-latex/pdistributions_1_2-1.pdf Graphic file (type pdf)
-<use MAS8403_Penguins!_files/figure-latex/pdistributions_1_2-1.pdf>
-Package pdftex.def Info: MAS8403_Penguins!_files/figure-latex/pdistributions_1_2-1.pdf  used on input line 210.
+[2 <./MAS8403_Penguins_210431461_files/figure-latex/histograms_1_2-1.pdf> <./MAS8403_Penguins_210431461_files/figure-latex/boxplots_1_2-1.pdf>]
+<MAS8403_Penguins_210431461_files/figure-latex/pdistributions_1_2-1.pdf, id=121, 469.755pt x 216.81pt>
+File: MAS8403_Penguins_210431461_files/figure-latex/pdistributions_1_2-1.pdf Graphic file (type pdf)
+<use MAS8403_Penguins_210431461_files/figure-latex/pdistributions_1_2-1.pdf>
+Package pdftex.def Info: MAS8403_Penguins_210431461_files/figure-latex/pdistributions_1_2-1.pdf  used on input line 211.
 (pdftex.def)             Requested size: 469.75386pt x 216.80946pt.
-<MAS8403_Penguins!_files/figure-latex/qq_BL_BD-1.pdf, id=122, 469.755pt x 194.7275pt>
-File: MAS8403_Penguins!_files/figure-latex/qq_BL_BD-1.pdf Graphic file (type pdf)
-<use MAS8403_Penguins!_files/figure-latex/qq_BL_BD-1.pdf>
-Package pdftex.def Info: MAS8403_Penguins!_files/figure-latex/qq_BL_BD-1.pdf  used on input line 226.
+<MAS8403_Penguins_210431461_files/figure-latex/qq_BL_BD-1.pdf, id=122, 469.755pt x 194.7275pt>
+File: MAS8403_Penguins_210431461_files/figure-latex/qq_BL_BD-1.pdf Graphic file (type pdf)
+<use MAS8403_Penguins_210431461_files/figure-latex/qq_BL_BD-1.pdf>
+Package pdftex.def Info: MAS8403_Penguins_210431461_files/figure-latex/qq_BL_BD-1.pdf  used on input line 227.
 (pdftex.def)             Requested size: 469.75386pt x 194.727pt.
-[3 <./MAS8403_Penguins!_files/figure-latex/pdistributions_1_2-1.pdf> <./MAS8403_Penguins!_files/figure-latex/qq_BL_BD-1.pdf>]
+[3 <./MAS8403_Penguins_210431461_files/figure-latex/pdistributions_1_2-1.pdf> <./MAS8403_Penguins_210431461_files/figure-latex/qq_BL_BD-1.pdf>]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 253.
+(Font)              <12> on input line 254.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 253.
+(Font)              <8> on input line 254.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 253.
+(Font)              <6> on input line 254.
 [4
 pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.305 
+l.306 
       ]
-<MAS8403_Penguins!_files/figure-latex/islands_d-1.pdf, id=148, 469.755pt x 252.945pt>
-File: MAS8403_Penguins!_files/figure-latex/islands_d-1.pdf Graphic file (type pdf)
-<use MAS8403_Penguins!_files/figure-latex/islands_d-1.pdf>
-Package pdftex.def Info: MAS8403_Penguins!_files/figure-latex/islands_d-1.pdf  used on input line 335.
+<MAS8403_Penguins_210431461_files/figure-latex/islands_d-1.pdf, id=148, 469.755pt x 252.945pt>
+File: MAS8403_Penguins_210431461_files/figure-latex/islands_d-1.pdf Graphic file (type pdf)
+<use MAS8403_Penguins_210431461_files/figure-latex/islands_d-1.pdf>
+Package pdftex.def Info: MAS8403_Penguins_210431461_files/figure-latex/islands_d-1.pdf  used on input line 336.
 (pdftex.def)             Requested size: 469.75386pt x 252.94438pt.
-[5 <./MAS8403_Penguins!_files/figure-latex/islands_d-1.pdf>] [6]
-<MAS8403_Penguins!_files/figure-latex/histograms-1.pdf, id=175, 650.43pt x 831.105pt>
-File: MAS8403_Penguins!_files/figure-latex/histograms-1.pdf Graphic file (type pdf)
-<use MAS8403_Penguins!_files/figure-latex/histograms-1.pdf>
-Package pdftex.def Info: MAS8403_Penguins!_files/figure-latex/histograms-1.pdf  used on input line 409.
+[5 <./MAS8403_Penguins_210431461_files/figure-latex/islands_d-1.pdf>] [6]
+<MAS8403_Penguins_210431461_files/figure-latex/histograms-1.pdf, id=175, 650.43pt x 831.105pt>
+File: MAS8403_Penguins_210431461_files/figure-latex/histograms-1.pdf Graphic file (type pdf)
+<use MAS8403_Penguins_210431461_files/figure-latex/histograms-1.pdf>
+Package pdftex.def Info: MAS8403_Penguins_210431461_files/figure-latex/histograms-1.pdf  used on input line 411.
 (pdftex.def)             Requested size: 469.76817pt x 600.25934pt.
-<MAS8403_Penguins!_files/figure-latex/boxplots-1.pdf, id=176, 650.43pt x 831.105pt>
-File: MAS8403_Penguins!_files/figure-latex/boxplots-1.pdf Graphic file (type pdf)
-<use MAS8403_Penguins!_files/figure-latex/boxplots-1.pdf>
-Package pdftex.def Info: MAS8403_Penguins!_files/figure-latex/boxplots-1.pdf  used on input line 415.
+<MAS8403_Penguins_210431461_files/figure-latex/boxplots-1.pdf, id=176, 650.43pt x 831.105pt>
+File: MAS8403_Penguins_210431461_files/figure-latex/boxplots-1.pdf Graphic file (type pdf)
+<use MAS8403_Penguins_210431461_files/figure-latex/boxplots-1.pdf>
+Package pdftex.def Info: MAS8403_Penguins_210431461_files/figure-latex/boxplots-1.pdf  used on input line 417.
 (pdftex.def)             Requested size: 469.76817pt x 600.25934pt.
-[7 <./MAS8403_Penguins!_files/figure-latex/histograms-1.pdf>]
-<MAS8403_Penguins!_files/figure-latex/pdistributions-1.pdf, id=189, 650.43pt x 831.105pt>
-File: MAS8403_Penguins!_files/figure-latex/pdistributions-1.pdf Graphic file (type pdf)
-<use MAS8403_Penguins!_files/figure-latex/pdistributions-1.pdf>
-Package pdftex.def Info: MAS8403_Penguins!_files/figure-latex/pdistributions-1.pdf  used on input line 422.
+[7 <./MAS8403_Penguins_210431461_files/figure-latex/histograms-1.pdf>]
+<MAS8403_Penguins_210431461_files/figure-latex/pdistributions-1.pdf, id=189, 650.43pt x 831.105pt>
+File: MAS8403_Penguins_210431461_files/figure-latex/pdistributions-1.pdf Graphic file (type pdf)
+<use MAS8403_Penguins_210431461_files/figure-latex/pdistributions-1.pdf>
+Package pdftex.def Info: MAS8403_Penguins_210431461_files/figure-latex/pdistributions-1.pdf  used on input line 424.
 (pdftex.def)             Requested size: 469.76817pt x 600.25934pt.
-[8 <./MAS8403_Penguins!_files/figure-latex/boxplots-1.pdf>]
-<MAS8403_Penguins!_files/figure-latex/qq_all-1.pdf, id=204, 650.43pt x 831.105pt>
-File: MAS8403_Penguins!_files/figure-latex/qq_all-1.pdf Graphic file (type pdf)
-<use MAS8403_Penguins!_files/figure-latex/qq_all-1.pdf>
-Package pdftex.def Info: MAS8403_Penguins!_files/figure-latex/qq_all-1.pdf  used on input line 429.
+[8 <./MAS8403_Penguins_210431461_files/figure-latex/boxplots-1.pdf>]
+<MAS8403_Penguins_210431461_files/figure-latex/qq_all-1.pdf, id=204, 650.43pt x 831.105pt>
+File: MAS8403_Penguins_210431461_files/figure-latex/qq_all-1.pdf Graphic file (type pdf)
+<use MAS8403_Penguins_210431461_files/figure-latex/qq_all-1.pdf>
+Package pdftex.def Info: MAS8403_Penguins_210431461_files/figure-latex/qq_all-1.pdf  used on input line 431.
 (pdftex.def)             Requested size: 469.76817pt x 600.25934pt.
-[9 <./MAS8403_Penguins!_files/figure-latex/pdistributions-1.pdf>] [10 <./MAS8403_Penguins!_files/figure-latex/qq_all-1.pdf>]
-<MAS8403_Penguins!_files/figure-latex/AA-1.pdf, id=227, 650.43pt x 831.105pt>
-File: MAS8403_Penguins!_files/figure-latex/AA-1.pdf Graphic file (type pdf)
-<use MAS8403_Penguins!_files/figure-latex/AA-1.pdf>
-Package pdftex.def Info: MAS8403_Penguins!_files/figure-latex/AA-1.pdf  used on input line 437.
+[9 <./MAS8403_Penguins_210431461_files/figure-latex/pdistributions-1.pdf>] [10 <./MAS8403_Penguins_210431461_files/figure-latex/qq_all-1.pdf>]
+<MAS8403_Penguins_210431461_files/figure-latex/AA-1.pdf, id=227, 650.43pt x 831.105pt>
+File: MAS8403_Penguins_210431461_files/figure-latex/AA-1.pdf Graphic file (type pdf)
+<use MAS8403_Penguins_210431461_files/figure-latex/AA-1.pdf>
+Package pdftex.def Info: MAS8403_Penguins_210431461_files/figure-latex/AA-1.pdf  used on input line 439.
 (pdftex.def)             Requested size: 469.76817pt x 600.25934pt.
-[11 <./MAS8403_Penguins!_files/figure-latex/AA-1.pdf>] [12
+[11 <./MAS8403_Penguins_210431461_files/figure-latex/AA-1.pdf>] [12
 pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.513 \newpage
+l.515 \newpage
               
 pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.513 \newpage
+l.515 \newpage
               
 pdfTeX warning (ext4): destination with the same identifier (name{table.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.513 \newpage
+l.515 \newpage
               
 pdfTeX warning (ext4): destination with the same identifier (name{table.5}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.513 \newpage
+l.515 \newpage
               ]
-<MAS8403_Penguins!_files/figure-latex/sex_boxplots-1.pdf, id=250, 650.43pt x 831.105pt>
-File: MAS8403_Penguins!_files/figure-latex/sex_boxplots-1.pdf Graphic file (type pdf)
-<use MAS8403_Penguins!_files/figure-latex/sex_boxplots-1.pdf>
-Package pdftex.def Info: MAS8403_Penguins!_files/figure-latex/sex_boxplots-1.pdf  used on input line 519.
+<MAS8403_Penguins_210431461_files/figure-latex/sex_boxplots-1.pdf, id=250, 650.43pt x 831.105pt>
+File: MAS8403_Penguins_210431461_files/figure-latex/sex_boxplots-1.pdf Graphic file (type pdf)
+<use MAS8403_Penguins_210431461_files/figure-latex/sex_boxplots-1.pdf>
+Package pdftex.def Info: MAS8403_Penguins_210431461_files/figure-latex/sex_boxplots-1.pdf  used on input line 521.
 (pdftex.def)             Requested size: 469.76817pt x 600.25934pt.
-[13 <./MAS8403_Penguins!_files/figure-latex/sex_boxplots-1.pdf>] [14] [15]
-<MAS8403_Penguins!_files/figure-latex/A_islands-1.pdf, id=275, 469.755pt x 578.16pt>
-File: MAS8403_Penguins!_files/figure-latex/A_islands-1.pdf Graphic file (type pdf)
-<use MAS8403_Penguins!_files/figure-latex/A_islands-1.pdf>
-Package pdftex.def Info: MAS8403_Penguins!_files/figure-latex/A_islands-1.pdf  used on input line 644.
+[13 <./MAS8403_Penguins_210431461_files/figure-latex/sex_boxplots-1.pdf>] [14] [15]
+<MAS8403_Penguins_210431461_files/figure-latex/A_islands-1.pdf, id=275, 469.755pt x 578.16pt>
+File: MAS8403_Penguins_210431461_files/figure-latex/A_islands-1.pdf Graphic file (type pdf)
+<use MAS8403_Penguins_210431461_files/figure-latex/A_islands-1.pdf>
+Package pdftex.def Info: MAS8403_Penguins_210431461_files/figure-latex/A_islands-1.pdf  used on input line 646.
 (pdftex.def)             Requested size: 469.75386pt x 578.15858pt.
-[16 <./MAS8403_Penguins!_files/figure-latex/A_islands-1.pdf>] [17] [18] [19] [20] (./MAS8403_Penguins!.aux)
+[16 <./MAS8403_Penguins_210431461_files/figure-latex/A_islands-1.pdf>] [17] [18] [19] [20] (./MAS8403_Penguins_210431461.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package rerunfilecheck Info: File `MAS8403_Penguins!.out' has not changed.
+Package rerunfilecheck Info: File `MAS8403_Penguins_210431461.out' has not changed.
 (rerunfilecheck)             Checksum: 543E1CDD76A555671CFC50C84DC0EE42;4031.
  ) 
 Here is how much of TeX's memory you used:
  12507 strings out of 477031
- 203066 string characters out of 5826140
- 538097 words of memory out of 5000000
+ 203876 string characters out of 5826140
+ 538142 words of memory out of 5000000
  33343 multiletter control sequences out of 15000+600000
  517819 words of font info for 69 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 72i,9n,77p,472b,506s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,9n,77p,481b,506s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}<c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri8.pfb><c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/morga/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on MAS8403_Penguins!.pdf (20 pages, 357690 bytes).
+Output written on MAS8403_Penguins_210431461.pdf (20 pages, 357948 bytes).
 PDF statistics:
  385 PDF objects out of 1000 (max. 8388607)
  314 compressed objects within 4 object streams

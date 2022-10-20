@@ -22,7 +22,7 @@ load.project()
 ```
 ### Introduction
 
-To the West of the Antarctic Peninsula, extending North and South of the Palmer Basin, is the Palmer Long Term Ecological Research (LTER) (@LTER) study area. Midway down the Antarctic Peninsula, on Anvers Island, is [Palmer Station](https://www.usap.gov/videoclipsandmaps/palwebcam.cfm?t=1). Researchers are staffed there to monitor the polar marine biome, including the local penguin population (@Palmer). 
+To the West of the Antarctic Peninsula, extending North and South of the Palmer Basin, is the Palmer Long Term Ecological Research (LTER) study area (@LTER). Midway down the Antarctic Peninsula, on Anvers Island, is [Palmer Station](https://www.usap.gov/videoclipsandmaps/palwebcam.cfm?t=1). Researchers are staffed there to monitor the polar marine biome, including the local penguin population (@Palmer). 
 
 The LTER researchers are using penguin-borne sensors to inform long-term studies on penguin population dynamics and improve our understanding of how Antarctic penguins are adjusting to rapid climate changes (@PS). The most dramatic effects of climate change are being observed in our polar regions (@PS). 
 
@@ -45,7 +45,7 @@ The exploratory data analysis outlined in this report explores a sample of 100 p
 \vspace{12pt}
 **Objective 1 (Distribution)**
 
-The data sample includes 8 variables that provide information relating to the 100 penguins. The species (Adelie, Chinstrap or Gentoo), island (Biscoe, Dream or Torgerson), and sex (male or female) are nominal, qualitative values. The year is discrete quantitative data that identifies when the variables were recorded (2007, 2008 or 2009). The variables bill length (mm), bill depth (mm), flipper length (mm) and body mass (g) are quantitative, numerical measures of each penguin. These 4 variables of measurement data are continuous and random; the variables adopt a smooth range of values (@L1). The plots below show the spread of the data (all histograms are provided in `Appendix A`). 
+The data sample includes 8 variables that provide information relating to the 100 penguins. The species (Adelie, Chinstrap or Gentoo), island (Biscoe, Dream or Torgerson), and sex (male or female) are nominal, qualitative values. The year is discrete quantitative data that identifies when the variables were recorded (2007, 2008 or 2009). The variables bill length (mm), bill depth (mm), flipper length (mm) and body mass (g) are quantitative, numerical measures of each penguin. These 4 variables of measurement data are continuous and random; the variables adopt a smooth range of values (@L1). The plots below provide examples of how this data is distributed. 
 
 ```{r histograms_1_2, echo=FALSE, message=FALSE, warning=FALSE, fig.height=2.4}
 # Histogram of bill length for penguins
@@ -59,7 +59,7 @@ H2 <- my.penguins %>%
 # Group Histograms
 grid.arrange(H1, H2, ncol=2, nrow=1)
 ```
-These histograms visualise the distribution of penguins' bill length (BL), bill depth (BD), flipper length (FL), and body mass (BM) data. The measurement data appears to be multimodal with some variance. However, there may be elements, such as the penguins' species, which are influencing the distribution of this data. 
+All histograms are provided in `Appendix A`; these visualise the distribution of penguins' bill length (BL), bill depth (BD), flipper length (FL), and body mass (BM) data. The measurement data appears to be multimodal with some variance. However, there may be elements, such as the penguins' species, which are influencing the distribution of this data. 
 
 ```{r summary, include=FALSE}
 my.summary <- tribble(~"Variable", ~"Bill Length (mm)", ~"Bill Depth (mm)", ~"Flipper Length (mm)", ~"Body Mass (g)", "Mean", 43.25, 17.13, 199.39, 4148.25, "SD", 5.31, 1.93, 13.69, 796.44, "CoV", 12.28, 11.27, 6.87, 19.20)
@@ -68,7 +68,7 @@ kable(my.summary, caption = "Summary Statistics of Penguin Variables") %>%
   kable_classic_2(full_width = F, latex_options = "HOLD_position")
 ```
 
-Filtering the data demonstrates that the BL, BD, FL, and BM changes by penguin species. The boxplots for BL and DP are provided below (all boxplots are provided in `Appendix B`).
+Filtering the data demonstrates that BL, BD, FL, and BM changes by penguin species. The boxplots for BL and DP are provided below (all boxplots are provided in `Appendix B`).
 
 ```{r boxplots_1_2, echo=FALSE, fig.height=2.4}
 # Boxplot of bill length for penguin species
@@ -210,7 +210,7 @@ B8 <- my.penguins %>%
 grid.arrange(B5, B6, B7, B8, ncol=2, nrow=2)
 ```
 
-The boxplots suggest that location may impact the phsyical characteristics of the Adelie penguins. For example, the range of Adelie penguins' BM is larger on Dream than other islands. To confirm the impact of location, two-sample t-tests were used. An example test about BM on the islands Dream and Biscoe is set out on the next page.
+The boxplots suggest that location may impact the phsyical characteristics of the Adelie penguins. For example, the range of Adelie penguins' BM appears to be larger on Dream than other islands. To confirm the impact of location, two-sample t-tests were used. An example test about BM on the islands Dream and Biscoe is set out on the next page.
 
 *Dream and Biscoe two-sample t-test for BM:* Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BM observations from Dream (D) to determine that body mass 'mean' on the island is significantly different to observations from Biscoe (B).
 
@@ -229,11 +229,11 @@ The penguin measurement variables BL, BD, FL and BM all appear to approximate a 
 
 `Appendix F` sets out the estimates for the parameters of the BL, BD, FL and BM distributions with a 95% confidence interval. The accuracy of these estimates as estimators for the population is likely to be limited, especially for the Chinstrap penguins. 
 
-The analysis highlights that BM is likely to best estimate the sex of Adelie and Gentoo penguins. For Chinstrap penguins, the BL appear to be best. Further investigation is required to identify if BM is likely to reliably estimate the sex of a penguin as the range of BM values for male and females overlap. For example, using both BM and BL measurement data may prove more reliable.
+The analysis highlights that BM is likely to best estimate the sex of Adelie and Gentoo penguins. For Chinstrap penguins, the BL appears to be best. Further investigation is required to identify if BM is likely to reliably estimate the sex of a penguin as the range of BM values for male and females overlap. For example, using both BM and BL measurement data may prove more reliable.
 
 Adelie penguins are the only species found on all 3 islands, and the location does not appear to have a statistically significant impact on its physical characteristics. Further investigation is needed to conclusively determine this; for example, exploring a larger data set filtered by island as well as year.
 
-Overall, the findings outlined in this report would be improved with access to more sample sets of the penguins' data or a larger sample size. Until then, the report provides statistically significant insights that will contribute the LTER researchers' understanding of the local penguin populations and opens further avenues for exploration.
+Overall, the findings outlined in this report would be improved with access to more sample sets of the penguins' data or a larger sample size. Until then, the report provides statistically significant insights that will contribute the LTER researchers' understanding of the local penguin populations and open further avenues for exploration.
 
 \newpage
 ### Appendix A: Histograms of Measurement Variables
@@ -557,14 +557,14 @@ locations_species <- my.penguins %>%
 
 # Quick plot count of each species per island
 locations_species %>%
-  ggplot(aes(x = island, y = n, fill = species)) + geom_bar(stat="identity", position="dodge") + labs(title = "Penguins Species per Island", x = "Location", y = "Count", fill = "Species") + scale_fill_brewer(palette = "Paired")
+  ggplot(aes(x = island, y = n, fill = species)) + geom_bar(stat="identity", position="dodge") + labs(title = "Count of Penguins Species per Island", x = "Location", y = "Count", fill = "Species") + scale_fill_brewer(palette = "Paired")
 ```
 
 \newpage 
 ### Appendix J: Two-sample t-tests for Adelie Location
 
 \vspace{10pt}
-**Dream and Biscoe two-sample t-test for BL:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BL observations from Dream (D) to determine that bill length 'mean' on the island is significantly different to observations from Biscoe (B).
+**Dream and Biscoe two-sample t-test for BL:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BL observations from Dream (D) to determine that bill length 'mean' on the island is different to bill length observations from Biscoe (B).
 
 > H~0~ : $\mu_D$ = $\mu_B$ \
 > H~1~ : $\mu_D$ $\neq$ $\mu_B$
@@ -572,7 +572,7 @@ locations_species %>%
 The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.21). The `t.test` function provides us with a p-value of 0.19. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
 
 \vspace{10pt}  
-**Dream and Torgersen two-sample t-test for BL:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BL observations from Dream (D) to determine that bill length 'mean' on the island is significantly different to observations from Torgersen (T).
+**Dream and Torgersen two-sample t-test for BL:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BL observations from Dream (D) to determine that bill length 'mean' on the island is different to bill length observations from Torgersen (T).
 
 > H~0~ : $\mu_D$ = $\mu_T$ \
 > H~1~ : $\mu_D$ $\neq$ $\mu_T$
@@ -580,7 +580,7 @@ The `barlett.test` function for equal variances confirms that the assumption of 
 The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.77). The `t.test` function provides us with a p-value of 0.51. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
 
 \vspace{10pt}  
-**Torgersen and Biscoe two-sample t-test for BD:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BD observations from Torgersen (T) to determine that bill depth 'mean' on the island is significantly different to observations from Biscoe (B).
+**Torgersen and Biscoe two-sample t-test for BD:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BD observations from Torgersen (T) to determine that bill depth 'mean' on the island is different to bill depth observations from Biscoe (B).
 
 > H~0~ : $\mu_T$ = $\mu_B$ \
 > H~1~ : $\mu_T$ $\neq$ $\mu_B$
@@ -588,7 +588,7 @@ The `barlett.test` function for equal variances confirms that the assumption of 
 The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.33). The `t.test` function provides us with a p-value of 0.63. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
 
 \vspace{10pt}  
-**Torgersen and Dream two-sample t-test for BD:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BD observations from Torgersen (T) to determine that bill depth 'mean' on the island is significantly different to observations from Dream (D).
+**Torgersen and Dream two-sample t-test for BD:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BD observations from Torgersen (T) to determine that bill depth 'mean' on the island is different to dill depth observations from Dream (D).
 
 > H~0~ : $\mu_T$ = $\mu_D$ \
 > H~1~ : $\mu_T$ $\neq$ $\mu_D$
@@ -596,7 +596,7 @@ The `barlett.test` function for equal variances confirms that the assumption of 
 The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.33). The `t.test` function provides us with a p-value of 0.82. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
 
 \vspace{10pt}  
-**Torgersen and Biscoe two-sample t-test for FL:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare FL observations from Torgersen (T) to determine that flipper length 'mean' on the island is significantly different to observations from Biscoe (B).
+**Torgersen and Biscoe two-sample t-test for FL:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare FL observations from Torgersen (T) to determine that flipper length 'mean' on the island is different to flipper length observations from Biscoe (B).
 
 > H~0~ : $\mu_T$ = $\mu_B$ \
 > H~1~ : $\mu_T$ $\neq$ $\mu_B$
@@ -604,7 +604,7 @@ The `barlett.test` function for equal variances confirms that the assumption of 
 The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.77). The `t.test` function provides us with a p-value of 0.48. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
 
 \vspace{10pt}  
-**Torgersen and Dream two-sample t-test for FL:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare FL observations from Torgersen (T) to determine that flipper length 'mean' on the island is significantly different to observations from Dream (D).
+**Torgersen and Dream two-sample t-test for FL:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare FL observations from Torgersen (T) to determine that flipper length 'mean' on the island is different to flipper length observations from Dream (D).
 
 > H~0~ : $\mu_T$ = $\mu_D$ \
 > H~1~ : $\mu_T$ $\neq$ $\mu_D$
@@ -612,7 +612,7 @@ The `barlett.test` function for equal variances confirms that the assumption of 
 The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.41). The `t.test` function provides us with a p-value of 0.94. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
 
 \vspace{10pt}  
-**Dream and Biscoe two-sample t-test for BM:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BM observations from Dream (D) to determine that body mass 'mean' on the island is significantly different to observations from Biscoe (B).
+**Dream and Biscoe two-sample t-test for BM:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BM observations from Dream (D) to determine that body mass 'mean' on the island is different to body mass observations from Biscoe (B).
 
 > H~0~ : $\mu_D$ = $\mu_B$ \
 > H~1~ : $\mu_D$ $\neq$ $\mu_B$
@@ -620,7 +620,7 @@ The `barlett.test` function for equal variances confirms that the assumption of 
 The `barlett.test` function for equal variances confirms that the assumption of equal variance is valid (p-value = 0.15). The `t.test` function provides us with a p-value of 0.26. This suggests that there is no evidence against *H~0~* and it is not rejected in favour of *H~1~*.
 
 \vspace{10pt}  
-**Dream and Torgersen two-sample t-test for BM:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BM observations from Dream (D) to determine that body mass 'mean' on the island is significantly different to observations from Torgersen (T).
+**Dream and Torgersen two-sample t-test for BM:** Of the 49 Adelie penguins, 17 are on Biscoe, 17 are on Dream, and 15 are on Torgersen. We would like to compare BM observations from Dream (D) to determine that body mass 'mean' on the island is different body mass to observations from Torgersen (T).
 
 > H~0~ : $\mu_D$ = $\mu_T$ \
 > H~1~ : $\mu_D$ $\neq$ $\mu_T$
